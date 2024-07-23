@@ -68,6 +68,9 @@
   }
 </style>
 <?php echo $this->session->flashdata('alert_message'); ?>
+
+<h1>Employee Status: <?= $employee_status ?></h1>
+<h1>Employee Login Status: <?= $employee_login_status ?></h1>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -75,12 +78,12 @@
 
       <div class="employee-details">
         <h3 class="text-center mb-4">Employee Details</h3>
-        <? if (!empty($user_employee_data->profile_image)) { ?>
+        <?php if (!empty($user_employee_data->profile_image)) { ?>
           <img src="<?= _uploaded_files_ . 'user_employee/profile_image/' . $user_employee_data->profile_image ?>"
             alt="Employee Profile Picture" class="profile-pic d-block">
-        <? } else { ?>
+        <?php } else { ?>
           <img src="<?= _uploaded_files_ ?>no-img.png" alt="Employee Profile Picture" class="profile-pic d-block">
-        <? } ?>
+        <?php } ?>
 
         <div class="employee-info mt-4">
           <h4 class="text-center"><?= $user_employee_data->name ?></h4>
@@ -94,76 +97,49 @@
         </div>
       </div>
 
-      <?php if ($user_employee_data->status == 1): ?>
-        <!-- <div class="card mb-4">
-          <div class="card-header text-center">
-
-            <h3 class="mb-0"><i class="fas fa-user-circle mr-2"></i>Employee Login</h3>
-          </div>
-          <div class="card-body p-4">
-            <form method="post" action="<?= MAINSITE . 'ajax_user_employee_do_login' ?>">
-              <div class="form-group">
-                <label for="user_employee_custom_id"><i class="fas fa-id-badge mr-2"></i>Employee ID</label>
-                <input type="text" name="user_employee_custom_id" id="user_employee_custom_id" class="form-control"
-                  required>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block mt-4">
-                <i class="fas fa-sign-in-alt mr-2"></i>Continue
-              </button>
-            </form>
-          </div>
-        </div> -->
-        <div id="login-form-container" class="row justify-content-center mt-4">
-          <div class="col-md-6">
-            <?php if ($employee_login_status == "allowed_for_login"): ?>
+      <?php if ($employee_status == "active"): ?>
+        <?php if ($employee_login_status == "allowed_for_login"): ?>
+          <div id="login-form-container" class="row justify-content-center mt-4">
+            <div class="col-md-6">
               <div class="card" style="min-width:200px;">
                 <div class="card-header">Employee Login</div>
                 <div class="card-body">
 
-                  <?php echo $this->session->flashdata('alert_message'); ?>
-                  <form method="post" action="<?= MAINSITE . 'employee-do-login' ?>" id="employee-login-form">
-                    <div class="form-group">
-                      <label for="user_employee_custom_id">Employee ID</label>
-                      <input type="text" name="user_employee_custom_id" id="user_employee_custom_id" class="form-control"
-                        required>
-                    </div>
+                  <form method="post" action="<?= MAINSITE . 'ajax_user_employee_do_login' ?>" id="employee-login-form">
+
                     <div class="form-group">
 
-                      <label for="login_image">Employee Image</label>
-                      <input type="file" accept="image/*" name="login_image" id="login_image" class="form-control" required>
+                      <label for="attendance_login_image">Employee Image</label>
+                      <input type="file" accept="image/*" name="attendance_login_image" id="attendance_login_image"
+                        class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary" id="login-button">login</button>
                   </form>
                 </div>
               </div>
-            <?php elseif ($employee_login_status == "allowed_for_logout"): ?>
-              <div class="card" style="min-width:200px;">
-                <div class="card-header">Employee Logout</div>
-                <div class="card-body">
 
-                  <?php echo $this->session->flashdata('alert_message'); ?>
-                  <form method="post" action="<?= MAINSITE . 'employee-do-logout' ?>" id="employee-login-form">
-                    <div class="form-group">
-                      <label for="user_employee_custom_id">Employee ID</label>
-                      <input type="text" name="user_employee_custom_id" id="user_employee_custom_id" class="form-control"
-                        required>
-                    </div>
-                    <div class="form-group">
 
-                      <label for="login_image">Employee Image</label>
-                      <input type="file" accept="image/*" name="login_image" id="login_image" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="login-button">Logout</button>
-                  </form>
-                </div>
-              </div>
-            <?php else: ?>
-              -
 
-            <?php endif; ?>
-
+            </div>
           </div>
-        </div>
+        <?php elseif ($employee_login_status == "allowed_for_logout"): ?>
+          <div class="card" style="min-width:200px;">
+            <div class="card-header">Employee Logout</div>
+            <div class="card-body">
+
+              <form method="post" action="<?= MAINSITE . 'ajax_user_employee_do_logout' ?>" id="employee-login-form">
+                <div class="form-group">
+                  <label for="attendance_logout_image">Employee Image</label>
+                  <input type="file" accept="image/*" name="attendance_logout_image" id="attendance_logout_image"
+                    class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="login-button">Logout</button>
+              </form>
+            </div>
+          </div>
+        <?php endif; ?>
+
+
       <?php endif; ?>
     </div>
   </div>

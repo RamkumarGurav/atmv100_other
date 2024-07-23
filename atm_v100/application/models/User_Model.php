@@ -361,8 +361,12 @@ class User_Model extends CI_Model
     }
 
 
-    if (!empty($params['check_attendance_status'])) {
-      $this->db->where('DATE(ft.login_time)', date('Y-m-d'));
+    if (!empty($params['get_todays_attendance_of_employee'])) {
+      $this->db->where('DATE(ft.added_on)', date('Y-m-d'));
+    }
+
+    if (!empty($params['get_recent_attendance_of_employee'])) {
+      $this->db->order_by("ft.added_on desc");
     }
 
 
