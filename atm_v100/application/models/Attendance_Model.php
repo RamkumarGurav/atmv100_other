@@ -592,7 +592,7 @@ class Attendance_Model extends CI_Model
            COUNT(CASE WHEN  TIME(ft.login_time) > ADDTIME(shift_timing.login_time, '00:15:00') THEN ft.attendance_id ELSE NULL END) as late_logins_count,
    COUNT(CASE WHEN TIME(ft.logout_time) < SUBTIME(shift_timing.logout_time, '00:15:00') THEN ft.attendance_id ELSE NULL END) as early_logouts_count,
      SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, ft.login_time, ft.logout_time))) as total_work_time ,
-      COALESCE(COUNT(missed_logins.missed_date), 0) AS missed_logins_count    
+ 
    ");
 
 
@@ -603,17 +603,8 @@ class Attendance_Model extends CI_Model
     $this->db->join('shift_timing', 'ue.user_employee_id = shift_timing.user_employee_id');
 
 
-    // Subquery to count missed logins
-    $this->db->join('(
-      SELECT st.user_employee_id, COUNT(*) AS missed_days
-      FROM shift_timing st
-      LEFT JOIN attendance a ON st.user_employee_id = a.user_employee_id 
-          AND DATE(a.login_time) = st.shift_date
-      WHERE st.is_working_day = 1 
-        AND a.login_time IS NULL
-        AND st.shift_date BETWEEN "' . $start_date . '" AND "' . $end_date . '"
-      GROUP BY st.user_employee_id
-  ) AS missed_logins', 'ue.user_employee_id = missed_logins.user_employee_id', 'left');
+
+
 
     $this->db->where('ft.login_time IS NOT NULL');
 
@@ -1233,6 +1224,69 @@ class Attendance_Model extends CI_Model
 
 
 
+
+  public function get_employees_absent_days_between_dates($params = array())
+  {
+    $start_date = $params['start_date'];
+    $end_date = $params['end_date'];
+    $user_employee_id = isset($params['user_employee_id']) ? $params['user_employee_id'] : null;
+
+    // Get all working days between the start and end dates
+    $this->db->select('ue.user_employee_id, ue.name, ue.user_employee_custom_id, DATE(st.ideal_login_time) as working_date');
+    $this->db->from('user_employee as ue');
+    $this->db->join('shift_timing as st', 'ue.user_employee_id = st.user_employee_id');
+    $this->db->where('st.is_working_day', 1);
+    $this->db->where('DATE(st.l) >=', $start_date);
+    $this->db->where('DATE(st.ideal_login_time) <=', $end_date);
+
+    if ($user_employee_id) {
+      $this->db->where('ue.user_employee_id', $user_employee_id);
+    }
+
+    $working_days = $this->db->get()->result_array();
+
+    // Get all attendance records between the start and end dates
+    $this->db->select('user_employee_id, DATE(login_time) as attendance_date');
+    $this->db->from('attendance');
+    $this->db->where('DATE(login_time) >=', $start_date);
+    $this->db->where('DATE(login_time) <=', $end_date);
+
+    if ($user_employee_id) {
+      $this->db->where('user_employee_id', $user_employee_id);
+    }
+
+    $attendance_records = $this->db->get()->result_array();
+
+    // Create a lookup array for quick access
+    $attendance_lookup = [];
+    foreach ($attendance_records as $record) {
+      $attendance_lookup[$record['user_employee_id']][$record['attendance_date']] = true;
+    }
+
+    // Calculate absent days
+    $absent_days = [];
+    foreach ($working_days as $day) {
+      $employee_id = $day['user_employee_id'];
+      $working_date = $day['working_date'];
+
+      if (!isset($attendance_lookup[$employee_id][$working_date])) {
+        if (!isset($absent_days[$employee_id])) {
+          $absent_days[$employee_id] = [
+            'user_employee_id' => $employee_id,
+            'name' => $day['name'],
+            'user_employee_custom_id' => $day['user_employee_custom_id'],
+            'absent_count' => 0,
+            'absent_dates' => []
+          ];
+        }
+        $absent_days[$employee_id]['absent_count']++;
+        $absent_days[$employee_id]['absent_dates'][] = $working_date;
+      }
+    }
+
+    return array_values($absent_days);
+  }
+
   public function get_employees_absent_on_date($params = array())
   {
     $day_number_from_0 = date('w', strtotime($params['date_dash_ymd']));
@@ -1253,6 +1307,7 @@ class Attendance_Model extends CI_Model
     $this->db->select('ft.user_employee_id');
     $this->db->from('attendance as ft');
     $this->db->where('DATE(ft.login_time)', $params['date_dash_ymd']);
+    $this->db->where('DATE(ft.login_time)', $params['date_dash_ymd']);
     $logged_in_employees = $this->db->get()->result_array();
 
 
@@ -1267,6 +1322,56 @@ class Attendance_Model extends CI_Model
     });
 
     return $absent_employees;
+  }
+
+  public function get_employees_absent_between_dates11($params = array())
+  {
+    // Ensure dates are in the correct format
+    $start_date = $params['start_date'];
+    $end_date = $params['end_date'];
+
+    $start = new DateTime($start_date);
+    $end = new DateTime($end_date);
+    $interval = new DateInterval('P1D'); // 1 day interval
+    $period = new DatePeriod($start, $interval, $end->modify('+0 day')); // Include end date
+
+    $missed_logins = [];
+
+    foreach ($period as $date) {
+      $date_str = $date->format('Y-m-d');
+      $day_number_from_0 = date('w', strtotime($date_str)); // Get the day of the week (0 for Sunday, 6 for Saturday)
+
+      // Step 1: Get all employees who had a working day on the specified date
+      $this->db->select('ue.user_employee_id');
+      $this->db->from('user_employee as ue');
+      $this->db->join('shift_timing as st', 'ue.user_employee_id = st.user_employee_id');
+      $this->db->where('st.is_working_day', 1);
+      $this->db->where('st.day', $day_number_from_0);
+      $working_day_employees = $this->db->get()->result_array();
+
+      $working_employee_ids = array_column($working_day_employees, 'user_employee_id');
+
+      // Step 2: Get all employees who logged in on the specified date
+      $this->db->select('user_employee_id');
+      $this->db->from('attendance');
+      $this->db->where('DATE(login_time)', $date_str);
+      $logged_in_employees = $this->db->get()->result_array();
+
+      $logged_in_employee_ids = array_column($logged_in_employees, 'user_employee_id');
+
+      // Step 3: Filter out employees who did not log in on the specified date
+      $missed_on_date = array_diff($working_employee_ids, $logged_in_employee_ids);
+
+      foreach ($missed_on_date as $employee_id) {
+        if (!isset($missed_logins[$employee_id])) {
+          $missed_logins[$employee_id] = 0;
+        }
+        $missed_logins[$employee_id]++;
+      }
+    }
+
+    return $missed_logins;
+
   }
 
   // public function get_employees_absent_on_date($params = array())
@@ -1372,6 +1477,177 @@ class Attendance_Model extends CI_Model
   }
 
 
+
+
+
+  public function get_employees_absent_between_dates_111($start_date, $end_date)
+  {
+    $start = new DateTime($start_date);
+    $end = new DateTime($end_date);
+    $interval = new DateInterval('P1D'); // 1 day interval
+    $period = new DatePeriod($start, $interval, $end->modify('+1 day')); // Include end date
+
+    $missed_logins = [];
+
+    foreach ($period as $date) {
+      $date_str = $date->format('Y-m-d');
+      $day_number_from_0 = date('w', strtotime($date_str)); // Get the day of the week (0 for Sunday, 6 for Saturday)
+
+      // Step 1: Get all employees who had a working day on the specified date
+      $this->db->select('ue.user_employee_id');
+      $this->db->from('user_employee as ue');
+      $this->db->join('shift_timing as st', 'ue.user_employee_id = st.user_employee_id');
+      $this->db->where('st.is_working_day', 1);
+      $this->db->where('st.day', $day_number_from_0);
+      $working_day_employees = $this->db->get()->result_array();
+
+      $working_employee_ids = array_column($working_day_employees, 'user_employee_id');
+
+      // Step 2: Get all employees who logged in on the specified date
+      $this->db->select('user_employee_id');
+      $this->db->from('attendance');
+      $this->db->where('DATE(actual_login_time)', $date_str);
+      $logged_in_employees = $this->db->get()->result_array();
+
+      $logged_in_employee_ids = array_column($logged_in_employees, 'user_employee_id');
+
+      // Step 3: Filter out employees who did not log in on the specified date
+      $missed_on_date = array_diff($working_employee_ids, $logged_in_employee_ids);
+
+      foreach ($missed_on_date as $employee_id) {
+        if (!isset($missed_logins[$employee_id])) {
+          $missed_logins[$employee_id] = 0;
+        }
+        $missed_logins[$employee_id]++;
+      }
+    }
+
+    return $missed_logins;
+  }
+
+  public function get_employees_absent_between_dates($start_date, $end_date)
+  {
+    $start = new DateTime($start_date);
+    $end = new DateTime($end_date);
+    $interval = new DateInterval('P1D'); // 1 day interval
+    $period = new DatePeriod($start, $interval, $end->modify('+1 day')); // Include end date
+
+    $missed_logins = [];
+
+    foreach ($period as $date) {
+      $date_str = $date->format('Y-m-d');
+      $day_number_from_0 = date('w', strtotime($date_str)); // Get the day of the week (0 for Sunday, 6 for Saturday)
+
+      // Step 1: Get all employees who had a working day on the specified date
+      $this->db->select('ue.user_employee_id');
+      $this->db->from('user_employee as ue');
+      $this->db->join('shift_timing as st', 'ue.user_employee_id = st.user_employee_id');
+      $this->db->where('st.is_working_day', 1);
+      $this->db->where('st.day', $day_number_from_0);
+      $working_day_employees = $this->db->get()->result_array();
+
+      $working_employee_ids = array_column($working_day_employees, 'user_employee_id');
+
+      // Step 2: Get all employees who logged in on the specified date
+      $this->db->select('user_employee_id');
+      $this->db->from('attendance');
+      $this->db->where('DATE(actual_login_time)', $date_str);
+      $logged_in_employees = $this->db->get()->result_array();
+
+      $logged_in_employee_ids = array_column($logged_in_employees, 'user_employee_id');
+
+      // Step 3: Filter out employees who did not log in on the specified date
+      $missed_on_date = array_diff($working_employee_ids, $logged_in_employee_ids);
+
+      foreach ($missed_on_date as $employee_id) {
+        if (!isset($missed_logins[$employee_id])) {
+          $missed_logins[$employee_id] = 0;
+        }
+        $missed_logins[$employee_id]++;
+      }
+    }
+
+    return $missed_logins;
+  }
+
+  public function get_attendance_report11($params = array())
+  {
+    $start_date = $params['start_date'];
+    $end_date = $params['end_date'];
+
+    // Get missed logins data
+    $missed_logins = $this->get_employees_absent_between_dates($start_date, $end_date);
+
+    $this->db->select("
+      DATE_FORMAT('$start_date', '%d/%m/%Y') AS from_date,
+      DATE_FORMAT('$end_date', '%d/%m/%Y') AS to_date,
+      ue.user_employee_id,
+      ue.name,
+      ue.profile_image,
+      ue.contactno,
+      ue.personal_email,
+      ue.user_employee_custom_id,
+      COUNT(CASE WHEN TIME(ft.login_time) > ADDTIME(shift_timing.login_time, '00:15:00') THEN ft.attendance_id ELSE NULL END) as late_logins_count,
+      COUNT(CASE WHEN TIME(ft.logout_time) < SUBTIME(shift_timing.logout_time, '00:15:00') THEN ft.attendance_id ELSE NULL END) as early_logouts_count,
+      SEC_TO_TIME(SUM(TIMESTAMPDIFF(SECOND, ft.login_time, ft.logout_time))) as total_work_time,
+      IFNULL(missed_logins_count.missed_logins, 0) AS missed_logins_count
+  ");
+
+    $this->db->from('attendance as ft');
+    $this->db->join('user_employee as ue', 'ft.user_employee_id = ue.user_employee_id');
+    $this->db->join('shift_timing', 'ue.user_employee_id = shift_timing.user_employee_id');
+
+    $this->db->join("(SELECT user_employee_id, COUNT(*) AS missed_logins 
+                    FROM (
+                        SELECT ue.user_employee_id
+                        FROM user_employee AS ue
+                        JOIN shift_timing AS st ON ue.user_employee_id = st.user_employee_id
+                        WHERE st.is_working_day = 1
+                        AND DATE_FORMAT(CONCAT('2023-', st.day, '-01'), '%Y-%m-%d') BETWEEN '$start_date' AND '$end_date'
+                    ) AS missed_days
+                    LEFT JOIN attendance AS a ON missed_days.user_employee_id = a.user_employee_id
+                    AND DATE(a.actual_login_time) = DATE_FORMAT(CONCAT('2023-', st.day, '-01'), '%Y-%m-%d')
+                    WHERE a.user_employee_id IS NULL
+                    GROUP BY user_employee_id
+                    ) AS missed_logins_count", 'ue.user_employee_id = missed_logins_count.user_employee_id', 'left');
+
+    $this->db->where('ft.login_time IS NOT NULL');
+
+    if (!empty($params['user_employee_id'])) {
+      $this->db->where('ft.user_employee_id', $params['user_employee_id']);
+    }
+
+    if (!empty($params['user_employee_record_status'])) {
+      $this->db->where('ue.status', $params['user_employee_record_status']);
+    }
+
+    if (!empty($params['attendance_record_status'])) {
+      if ($params['attendance_record_status'] == 'zero') {
+        $this->db->where('ft.status', 0);
+      } else {
+        $this->db->where('ft.status', $params['attendance_record_status']);
+      }
+    }
+
+    if (!empty($params['user_employee_custom_id'])) {
+      $this->db->where('ue.user_employee_custom_id', $params['user_employee_custom_id']);
+    }
+
+    if (!empty($params['start_date']) && !empty($params['end_date'])) {
+      $this->db->where('ft.login_time >=', $params['start_date']);
+      $this->db->where('ft.login_time <=', $params['end_date']);
+    }
+
+    $this->db->where('DAYOFWEEK(ft.login_time) = (shift_timing.day + 1)');
+    $this->db->where('shift_timing.is_working_day', 1);
+
+    $this->db->group_by('ue.user_employee_id');
+
+    $query = $this->db->get();
+    $results = $query->result();
+
+    return $results;
+  }
 
 }
 
