@@ -132,13 +132,6 @@ if (!empty($user_employee_data)) {
                                             <strong class="full">Employee ID</strong>
                                             <?= $user_employee_data->user_employee_custom_id ?>
                                         </td>
-
-
-
-
-
-
-
                                     </tr>
                                     <tr>
                                         <td>
@@ -196,6 +189,17 @@ if (!empty($user_employee_data)) {
                                         </td>
 
 
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <strong class="full">Recent Attendance Activity Log</strong>
+                                            <?php if (!empty($user_employee_data->attendance_log)): ?>
+                                                <?= $user_employee_data->attendance_log ?>
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
+
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="5">

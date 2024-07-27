@@ -64,7 +64,7 @@ if (!empty($attendance_data)) {
                                         New</button></a>
                             <? } ?>
                             <?php
-                            if ($user_access->update_module == 1 && false) {
+                            if ($user_access->update_module == 1) {
                                 ?>
                                 <a
                                     href="<?= MAINSITE_Admin . $user_access->class_name ?>/attendance-edit/<?= $attendance_data->attendance_id ?>">
@@ -92,7 +92,11 @@ if (!empty($attendance_data)) {
                                         </td>
                                         <td>
                                             <strong class="full">Attendace Day</strong>
-                                            <?= $attendance_data->added_on ?>
+                                            <?php if (!empty($attendance_data->added_on)): ?>
+                                                <?= (new DateTime($attendance_data->added_on))->format("\A\\t h:i A \O\\n d-F-Y"); ?>
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
                                         </td>
 
                                         <td>
@@ -127,7 +131,7 @@ if (!empty($attendance_data)) {
                                         <td>
                                             <strong class="full">Logged-in Time </strong>
                                             <?php if (!empty($attendance_data->login_time)): ?>
-                                                <?= (new DateTime($attendance_data->login_time))->format('h:i A'); ?>
+                                                <?= (new DateTime($attendance_data->login_time))->format("\A\\t h:i A \O\\n d-F-Y"); ?>
                                             <?php else: ?>
                                                 -
                                             <?php endif; ?>
@@ -152,8 +156,8 @@ if (!empty($attendance_data)) {
 
                                         <td>
                                             <strong class="full">Logged-out Time </strong>
-                                            <?php if (!empty($attendance_data->login_time)): ?>
-                                                <?= (new DateTime($attendance_data->login_time))->format('h:i A'); ?>
+                                            <?php if (!empty($attendance_data->logout_time)): ?>
+                                                <?= (new DateTime($attendance_data->logout_time))->format("\A\\t h:i A \O\\n d-F-Y"); ?>
                                             <?php else: ?>
                                                 -
                                             <?php endif; ?>

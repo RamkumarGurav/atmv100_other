@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2024 at 04:46 PM
+-- Generation Time: Jul 27, 2024 at 04:43 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.1.33
 
@@ -68,10 +68,10 @@ CREATE TABLE `admin_user` (
 --
 
 INSERT INTO `admin_user` (`admin_user_id`, `user_role_id`, `designation_id`, `name`, `first_name`, `last_name`, `password`, `show_password`, `email`, `username`, `country_id`, `state_id`, `city_id`, `address1`, `address2`, `address3`, `pincode`, `mobile_no`, `alt_mobile_no`, `fax_no`, `data_view`, `approval_access`, `user_image`, `added_by`, `added_on`, `updated_by`, `updated_on`, `status`, `last_login`, `last_loginip`, `joining_date`, `termination_date`) VALUES
-(1, 1, 1, 'Krishna', 'Krishna', '', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'krishna@prachitours.in', 'admin', 1, 1, 8, 'Tumkuru', '', '', '560069', '9886551433', '', '', 1, 0, NULL, 1, '2022-11-21 00:00:00', 1, '2024-07-13 18:53:58', 1, '2024-07-20 18:50:30', '192.168.1.33', '2022-03-11', '1970-01-01'),
+(1, 1, 1, 'Krishna', 'Krishna', '', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'krishna@prachitours.in', 'admin', 1, 1, 8, 'Tumkuru', '', '', '560069', '9886551433', '', '', 1, 0, NULL, 1, '2022-11-21 00:00:00', 1, '2024-07-13 18:53:58', 1, '2024-07-27 15:26:41', '::1', '2022-03-11', '1970-01-01'),
 (3, 0, 1, 'ramesh h', 'ramesh', 'h', 'edb43a6f411d80717742583ce13af55b', 'saitarun@annadatha', 'saitarun999@gmail.com', NULL, 1, 29, 1123, 'RAMAYAMPET', '', 'MEDAK DIST', '502101', '8555863004', '', '', 0, 0, NULL, 1, '2023-12-21 18:19:52', 1, '2024-06-19 16:57:47', 1, '2023-12-21 18:21:21', '49.249.163.201', '2023-12-21', NULL),
 (4, 0, 1, 'ram gurav', 'ram', 'gurav', 'd74682ee47c3fffd5dcd749f840fcdd4', 'qwerqwer', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', 1, 1, 2, 'chandra layout', 'bengaluru,560060', '', '560060', '8549065626', '', '', 1, 0, NULL, 1, '2024-06-23 12:52:15', NULL, NULL, 1, '2024-07-20 18:57:44', '::1', '2024-06-23', '2024-06-23'),
-(5, 0, 3, 'asdframkumar asdfgurav', 'asdframkumar', 'asdfgurav', '6a204bd89f3c8348afd5c77c717a097a', 'asdfasdf', 'asdframkumarsgurav@gmail.com', NULL, 1, 1, 9, 'chandra layout', 'bengaluru,560060', '', '560060', '8549065626', '', '', 1, 0, NULL, 1, '2024-07-13 11:10:53', 1, '2024-07-13 11:11:27', 1, NULL, NULL, '2024-07-13', '2024-07-19');
+(5, 0, 3, 'shamkumar meti', 'shamkumar', 'meti', '6a204bd89f3c8348afd5c77c717a097a', 'asdfasdf', 'asdframkumarsgurav@gmail.com', NULL, 1, 1, 9, 'chandra layout', '', '', '560060', '8549065626', '', '', 1, 0, NULL, 1, '2024-07-13 11:10:53', 1, '2024-07-27 11:43:53', 1, NULL, NULL, '2024-07-13', '2024-07-19');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ INSERT INTO `admin_user_role` (`admin_user_role`, `admin_user_id`, `user_role_id
 (19, 1, 1, 1),
 (14, 3, 4, 1),
 (15, 4, 1, 1),
-(18, 5, 3, 1);
+(20, 5, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -146,17 +146,48 @@ CREATE TABLE `attendance` (
 --
 
 INSERT INTO `attendance` (`attendance_id`, `user_employee_id`, `login_time`, `attendance_login_image`, `logout_time`, `total_time`, `attendance_logout_image`, `status`, `added_on`, `added_by`, `updated_on`, `updated_by`, `is_deleted`, `is_deleted_on`, `is_deleted_by`) VALUES
-(22, 4, '2024-07-18 19:20:26', NULL, '2024-07-18 19:20:38', '00:00:12', NULL, '1', '2024-07-18 19:20:26', NULL, '2024-07-18 19:20:38', NULL, '0', NULL, NULL),
-(23, 4, '2024-07-18 19:24:14', NULL, '2024-07-18 19:24:34', '00:00:20', NULL, '1', '2024-07-18 19:24:14', NULL, '2024-07-18 19:24:34', NULL, '0', NULL, NULL),
-(24, 4, '2024-07-19 17:39:22', NULL, '2024-07-19 17:42:10', '00:02:48', NULL, '1', '2024-07-19 17:39:22', NULL, '2024-07-19 17:42:10', NULL, '0', NULL, NULL),
-(25, 4, '2024-07-20 13:00:00', NULL, NULL, NULL, NULL, '1', '2024-07-20 13:00:00', NULL, NULL, NULL, '0', NULL, NULL),
-(26, 4, '2024-07-20 13:05:28', NULL, NULL, NULL, NULL, '1', '2024-07-20 13:05:28', NULL, NULL, NULL, '0', NULL, NULL),
-(27, 4, '2024-07-20 13:05:44', NULL, '2024-07-20 13:08:06', '00:02:22', NULL, '1', '2024-07-20 13:05:44', NULL, '2024-07-20 13:08:06', NULL, '0', NULL, NULL),
-(28, 4, '2024-07-20 13:08:15', NULL, '2024-07-20 13:11:28', '00:03:13', NULL, '1', '2024-07-20 13:08:15', NULL, '2024-07-20 13:11:28', NULL, '0', NULL, NULL),
-(29, 4, '2024-07-20 13:12:48', NULL, '2024-07-20 13:12:54', '00:00:06', NULL, '1', '2024-07-20 13:12:48', NULL, '2024-07-20 13:12:54', NULL, '0', NULL, NULL),
-(30, 4, '2024-07-20 15:32:06', NULL, '2024-07-20 15:32:18', '00:00:12', NULL, '1', '2024-07-20 15:32:06', NULL, '2024-07-20 15:32:18', NULL, '0', NULL, NULL),
-(31, 4, '2024-07-20 15:33:13', NULL, '2024-07-20 15:33:18', '00:00:05', NULL, '1', '2024-07-20 15:33:13', NULL, '2024-07-20 15:33:18', NULL, '0', NULL, NULL),
-(32, 4, '2024-07-20 15:33:32', NULL, '2024-07-20 15:33:47', '00:00:15', NULL, '1', '2024-07-20 15:33:32', NULL, '2024-07-20 15:33:47', NULL, '0', NULL, NULL);
+(46, 4, '2024-07-19 11:07:05', 'attendance_login_image_46.png', '2024-07-19 13:07:05', '02:00:00', 'attendance_logout_image_46.png', '1', '2024-07-23 13:01:17', NULL, '2024-07-26 12:39:17', 1, '0', NULL, NULL),
+(59, 5, '2024-07-25 11:00:00', 'attendance_login_image_59.png', NULL, '00:00:00', 'attendance_logout_image_59.png', '1', '2024-07-23 18:51:19', NULL, '2024-07-26 18:38:45', 1, '0', NULL, NULL),
+(61, 4, '2024-07-23 09:23:53', 'attendance_login_image_61.png', '2024-07-23 19:24:24', '00:00:31', 'attendance_logout_image_61.png', '1', '2024-07-23 19:23:53', NULL, '2024-07-26 12:54:16', 1, '0', NULL, NULL),
+(79, 4, '2024-07-24 11:24:19', 'attendance_login_image__79.png', '2024-07-24 17:25:32', '06:01:13', 'attendance_logout_image__79.png', '1', '2024-07-26 11:24:19', NULL, '2024-07-26 12:37:47', 1, '0', NULL, NULL),
+(80, 4, '2024-07-26 11:06:44', 'attendance_login_image__80.png', '2024-07-26 16:40:00', '05:33:16', 'attendance_logout_image__80.png', '1', '2024-07-26 11:24:44', NULL, '2024-07-27 10:55:31', 1, '0', NULL, NULL),
+(81, 5, '2024-07-26 10:09:08', 'attendance_login_image__81.png', NULL, '00:00:00', 'attendance_logout_image__81.png', '1', '2024-07-26 11:28:08', NULL, '2024-07-27 10:49:47', 1, '0', NULL, NULL),
+(84, 5, '2024-07-26 11:00:00', NULL, NULL, '00:00:00', NULL, '1', '2024-07-27 11:06:20', 1, NULL, NULL, '0', NULL, NULL),
+(85, 4, '2023-01-02 10:10:00', NULL, '2023-01-02 18:50:00', '08:40:00', NULL, '1', '2024-07-27 15:28:34', 1, '2024-07-27 17:55:52', 1, '0', NULL, NULL),
+(86, 4, '2023-01-03 10:10:00', NULL, '2023-01-03 18:10:00', '08:00:00', NULL, '1', '2024-07-27 15:28:34', 1, '2024-07-27 18:42:01', 1, '0', NULL, NULL),
+(87, 4, '2023-01-04 10:30:00', NULL, '2023-01-04 18:50:00', '08:20:00', NULL, '1', '2024-07-27 16:15:00', NULL, '2024-07-27 18:42:22', 1, '0', NULL, NULL),
+(88, 4, '2023-01-05 10:30:00', NULL, '2023-01-05 18:10:00', '07:40:00', NULL, '1', '2024-07-27 16:15:00', NULL, '2024-07-27 18:46:59', 1, '0', NULL, NULL),
+(91, 4, '2023-01-09 10:10:00', NULL, '2023-01-09 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:00', NULL, NULL, NULL, '0', NULL, NULL),
+(92, 4, '2023-01-10 10:10:00', NULL, '2023-01-10 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(93, 4, '2023-01-11 10:30:00', NULL, '2023-01-11 18:50:00', '08:20:00', NULL, '1', '2024-07-27 16:15:01', NULL, '2024-07-27 18:25:20', 1, '0', NULL, NULL),
+(94, 4, '2023-01-12 10:30:00', NULL, '2023-01-12 18:10:00', '07:40:00', NULL, '1', '2024-07-27 16:15:01', NULL, '2024-07-27 18:25:40', 1, '0', NULL, NULL),
+(95, 4, '2023-01-16 10:10:00', NULL, '2023-01-16 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(96, 4, '2023-01-17 10:10:00', NULL, '2023-01-17 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(97, 4, '2023-01-18 10:30:00', NULL, '2023-01-18 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(98, 4, '2023-01-19 10:30:00', NULL, '2023-01-19 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(99, 4, '2023-01-23 10:10:00', NULL, '2023-01-23 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(100, 4, '2023-01-24 10:10:00', NULL, '2023-01-24 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(101, 4, '2023-01-25 10:30:00', NULL, '2023-01-25 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(102, 4, '2023-01-26 10:30:00', NULL, '2023-01-26 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:01', NULL, NULL, NULL, '0', NULL, NULL),
+(103, 5, '2023-01-02 10:10:00', NULL, '2023-01-02 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(104, 5, '2023-01-03 10:10:00', NULL, '2023-01-03 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(105, 5, '2023-01-04 10:30:00', NULL, '2023-01-04 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(106, 5, '2023-01-05 10:30:00', NULL, '2023-01-05 18:10:00', '07:40:00', NULL, '1', '2024-07-27 16:15:53', NULL, '2024-07-27 18:26:20', 1, '0', NULL, NULL),
+(107, 5, '2023-01-06 10:30:00', NULL, '2023-01-06 18:10:00', '07:40:00', NULL, '1', '2024-07-27 16:15:53', NULL, '2024-07-27 19:42:44', 1, '0', NULL, NULL),
+(108, 5, '2023-01-09 10:10:00', NULL, '2023-01-09 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(109, 5, '2023-01-10 10:10:00', NULL, '2023-01-10 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(110, 5, '2023-01-11 10:30:00', NULL, '2023-01-11 18:50:00', '08:20:00', NULL, '1', '2024-07-27 16:15:53', NULL, '2024-07-27 18:26:40', 1, '0', NULL, NULL),
+(111, 5, '2023-01-12 10:30:00', NULL, '2023-01-12 18:10:00', '07:40:00', NULL, '1', '2024-07-27 16:15:53', NULL, '2024-07-27 18:26:50', 1, '0', NULL, NULL),
+(112, 5, '2023-01-16 10:10:00', NULL, '2023-01-16 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(113, 5, '2023-01-17 10:10:00', NULL, '2023-01-17 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(114, 5, '2023-01-18 10:30:00', NULL, '2023-01-18 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(115, 5, '2023-01-19 10:30:00', NULL, '2023-01-19 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(116, 5, '2023-01-23 10:10:00', NULL, '2023-01-23 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(117, 5, '2023-01-24 10:10:00', NULL, '2023-01-24 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(118, 5, '2023-01-25 10:30:00', NULL, '2023-01-25 18:50:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(119, 5, '2023-01-26 10:30:00', NULL, '2023-01-26 18:10:00', NULL, NULL, '1', '2024-07-27 16:15:53', NULL, NULL, NULL, '0', NULL, NULL),
+(120, 5, '2023-01-27 10:30:00', NULL, '2023-01-27 18:10:00', '07:40:00', NULL, '1', '2024-07-27 16:15:53', NULL, '2024-07-27 19:44:43', 1, '0', NULL, NULL),
+(121, 4, '2024-07-27 19:24:58', 'attendance_login_image__121.png', NULL, NULL, NULL, '0', '2024-07-27 19:24:58', NULL, '2024-07-27 19:41:59', 1, '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -167,7 +198,7 @@ INSERT INTO `attendance` (`attendance_id`, `user_employee_id`, `login_time`, `at
 CREATE TABLE `branch` (
   `branch_id` int(11) NOT NULL,
   `branch_name` varchar(255) NOT NULL,
-  `branch_address` text NOT NULL,
+  `branch_address` text DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
   `added_on` datetime DEFAULT current_timestamp(),
   `added_by` int(11) DEFAULT NULL,
@@ -184,7 +215,9 @@ CREATE TABLE `branch` (
 
 INSERT INTO `branch` (`branch_id`, `branch_name`, `branch_address`, `status`, `added_on`, `added_by`, `updated_on`, `updated_by`, `is_deleted`, `is_deleted_on`, `is_deleted_by`) VALUES
 (1, 'Bengalore branch', 'bengalore 560060', '1', '2024-07-12 13:26:58', NULL, '2024-07-13 16:27:05', 1, '0', NULL, NULL),
-(2, 'Manglore Branch', 'Manglore 570070', '1', '2024-07-12 13:51:21', 1, '2024-07-12 13:55:25', 1, '0', NULL, NULL);
+(2, 'Manglore Branch', 'Manglore 570070', '1', '2024-07-12 13:51:21', 1, '2024-07-12 13:55:25', 1, '0', NULL, NULL),
+(3, 'Mysore branch', 'asdf asdf', '1', '2024-07-25 15:48:04', 1, NULL, NULL, '0', NULL, NULL),
+(4, 'Kashmira', NULL, '1', '2024-07-25 16:44:06', 1, '2024-07-25 16:45:33', 1, '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1746,8 +1779,9 @@ CREATE TABLE `ip_address` (
 --
 
 INSERT INTO `ip_address` (`ip_address_id`, `ip_address`, `status`, `added_on`, `added_by`, `updated_on`, `updated_by`, `is_deleted`, `is_deleted_on`, `is_deleted_by`) VALUES
-(1, '::1', '1', '2024-07-12 19:06:22', NULL, '2024-07-18 17:32:36', NULL, '0', NULL, NULL),
-(2, '192.168.1.33', '1', '2024-07-12 19:06:22', NULL, '2024-07-20 12:59:48', 1, '0', NULL, NULL);
+(8, '250.11.255.255', '1', '2024-07-24 16:08:28', 1, NULL, NULL, '0', NULL, NULL),
+(9, '192.168.1.33', '1', '2024-07-24 16:14:56', 1, '2024-07-25 19:51:48', 1, '0', NULL, NULL),
+(10, '::1', '1', '2024-07-24 16:14:56', 1, NULL, NULL, '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1790,8 +1824,7 @@ INSERT INTO `module_master` (`module_id`, `module_name`, `is_master`, `parent_mo
 (205, 'Attendance', 11, 0, 'user_employee/Attendance-Module', 'attendance-list', '', 0, 1, 'attendance', 2, '2020-04-20 12:44:42', 1, 1, NULL),
 (201, 'Branches', 1, 0, 'master/Branch-Module', 'branch-list', '', 0, 1, 'branch', 1, '2020-04-20 12:44:42', 1, 1, NULL),
 (202, 'User Employees', 11, 0, 'user_employee/User-Employee-Module', 'listings', '', 0, 1, 'user_employee', 8, '2020-04-20 12:44:42', 1, 1, NULL),
-(203, 'IP Addressess', 1, 0, 'master/Ip-Address-Module', 'ip_address_list', '', 0, 1, 'ip_address', 1, '2020-04-20 12:44:42', 1, 1, NULL),
-(204, 'Shift Timings', 0, 0, 'master/Shift-Timing-Module', 'shift-timing-list', '', 0, 1, 'shift_timing', 1, '2020-04-20 12:44:42', 1, 1, NULL);
+(203, 'IP Addressess', 1, 0, 'master/Ip-Address-Module', 'ip_address_list', '', 0, 1, 'ip_address', 1, '2020-04-20 12:44:42', 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1897,56 +1930,27 @@ CREATE TABLE `shift_timing` (
 --
 
 INSERT INTO `shift_timing` (`shift_timing_id`, `user_employee_id`, `is_working_day`, `day`, `login_time`, `logout_time`, `status`, `added_on`, `added_by`, `updated_on`, `updated_by`, `is_deleted`, `is_deleted_on`, `is_deleted_by`) VALUES
-(64, 2, 1, '0', '06:26:00', '18:25:00', '1', '2024-07-15 18:26:01', 1, NULL, NULL, '0', NULL, NULL),
-(156, 6, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(157, 6, 1, '1', '08:00:00', '20:01:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(158, 6, 0, '2', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(159, 6, 0, '3', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(160, 6, 0, '4', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(161, 6, 0, '5', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(162, 6, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(170, 7, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(171, 7, 1, '1', '08:08:00', '20:08:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(172, 7, 0, '2', '00:00:00', '00:00:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(173, 7, 0, '3', '00:00:00', '00:00:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(174, 7, 0, '4', '00:00:00', '00:00:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(175, 7, 0, '5', '00:00:00', '00:00:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(176, 7, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-19 20:11:20', 1, NULL, NULL, '0', NULL, NULL),
-(177, 8, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(178, 8, 1, '1', '11:08:00', '23:08:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(179, 8, 0, '2', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(180, 8, 0, '3', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(181, 8, 0, '4', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(182, 8, 0, '5', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(183, 8, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(275, 9, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(276, 9, 0, '1', '00:00:00', '00:00:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(277, 9, 0, '2', '00:00:00', '00:00:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(278, 9, 0, '3', '00:00:00', '00:00:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(279, 9, 0, '4', '00:00:00', '00:00:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(280, 9, 1, '5', '11:33:00', '23:33:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(281, 9, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-20 11:57:27', 1, NULL, NULL, '0', NULL, NULL),
-(282, 1, 1, '0', '17:07:00', '17:07:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(283, 1, 1, '1', '06:26:00', '18:25:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(284, 1, 0, '2', '00:00:00', '00:00:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(285, 1, 1, '3', '17:07:00', '17:07:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(286, 1, 1, '4', '17:08:00', '17:11:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(287, 1, 1, '5', '22:06:00', '17:10:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(288, 1, 1, '6', '06:11:00', '19:10:00', '1', '2024-07-20 19:46:33', 4, NULL, NULL, '0', NULL, NULL),
-(289, 4, 1, '0', '06:36:00', '18:36:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(290, 4, 1, '1', '07:36:00', '19:36:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(291, 4, 1, '2', '08:36:00', '20:36:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(292, 4, 1, '3', '09:36:00', '21:36:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(293, 4, 1, '4', '10:36:00', '22:37:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(294, 4, 0, '5', '00:00:00', '00:00:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(295, 4, 1, '6', '23:37:00', '23:37:00', '1', '2024-07-20 19:49:24', 4, NULL, NULL, '0', NULL, NULL),
-(296, 5, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL),
-(297, 5, 1, '1', '07:11:00', '19:11:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL),
-(298, 5, 1, '2', '07:11:00', '19:11:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL),
-(299, 5, 1, '3', '07:11:00', '19:12:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL),
-(300, 5, 1, '4', '07:11:00', '19:12:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL),
-(301, 5, 1, '5', '07:11:00', '19:12:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL),
-(302, 5, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-20 19:50:34', 4, NULL, NULL, '0', NULL, NULL);
+(387, 10, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(388, 10, 1, '1', '10:00:00', '19:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(389, 10, 1, '2', '10:00:00', '19:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(390, 10, 1, '3', '10:00:00', '19:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(391, 10, 1, '4', '10:00:00', '19:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(392, 10, 1, '5', '10:00:00', '19:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(393, 10, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-27 11:57:22', 1, NULL, NULL, '0', NULL, NULL),
+(394, 5, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(395, 5, 1, '1', '10:00:00', '19:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(396, 5, 1, '2', '10:00:00', '19:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(397, 5, 1, '3', '10:00:00', '19:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(398, 5, 1, '4', '10:00:00', '19:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(399, 5, 1, '5', '10:00:00', '19:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(400, 5, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-27 11:58:31', 1, NULL, NULL, '0', NULL, NULL),
+(401, 4, 0, '0', '00:00:00', '00:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL),
+(402, 4, 1, '1', '10:00:00', '19:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL),
+(403, 4, 1, '2', '10:00:00', '19:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL),
+(404, 4, 1, '3', '10:00:00', '19:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL),
+(405, 4, 1, '4', '10:00:00', '19:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL),
+(406, 4, 1, '5', '10:00:00', '19:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL),
+(407, 4, 0, '6', '00:00:00', '00:00:00', '1', '2024-07-27 18:39:47', 1, NULL, NULL, '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2069,6 +2073,7 @@ CREATE TABLE `user_employee` (
   `department_id` int(11) NOT NULL,
   `designation_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `attendance_log` varchar(255) DEFAULT NULL,
   `marital_status` tinyint(4) DEFAULT 0,
   `marriage_anniversary` date DEFAULT NULL,
   `gender` tinyint(4) DEFAULT NULL,
@@ -2087,8 +2092,6 @@ CREATE TABLE `user_employee` (
   `city_id` int(11) DEFAULT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
   `user_employee_custom_id` varchar(100) NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
   `status` char(1) NOT NULL DEFAULT '1',
   `added_on` datetime DEFAULT current_timestamp(),
   `added_by` int(11) DEFAULT NULL,
@@ -2103,14 +2106,10 @@ CREATE TABLE `user_employee` (
 -- Dumping data for table `user_employee`
 --
 
-INSERT INTO `user_employee` (`user_employee_id`, `branch_id`, `department_id`, `designation_id`, `name`, `marital_status`, `marriage_anniversary`, `gender`, `contactno`, `alt_contactno`, `personal_email`, `company_email`, `birthday`, `joining_date`, `pan_number`, `aadhar_number`, `address`, `pincode`, `country_id`, `state_id`, `city_id`, `profile_image`, `user_employee_custom_id`, `start_time`, `end_time`, `status`, `added_on`, `added_by`, `updated_on`, `updated_by`, `is_deleted`, `is_deleted_on`, `is_deleted_by`) VALUES
-(1, 1, 1, 1, 'ram gurav', 1, NULL, NULL, '1234567890', '1234567890', 'ram@gmail.com', 'company@gmail.com', '2024-07-16', '2024-07-09', '12431243', '124312431234', 'asdf asd fasdf', '', 0, 0, NULL, 'profile_image_1.png', 'emp1', '05:00:00', '16:00:00', '0', '2024-07-13 19:18:07', NULL, '2024-07-20 19:46:33', 4, '0', NULL, NULL),
-(4, 1, 1, 2, 'Guru', 2, '2024-07-19', NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '1998-07-17', '2024-07-14', 'sdaf1243', '818236182736', 'chandra layout,bengulur 56089', '', 0, 0, NULL, 'profile_image_4.png', 'emp111', '00:00:00', '00:00:00', '1', '2024-07-15 18:38:05', 1, '2024-07-20 20:00:15', 4, '0', NULL, NULL),
-(5, 1, 2, 1, 'shamkumar gurav', 2, '1970-01-01', NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '2024-07-18', '2024-07-18', 'sdaf1243', 'asdf1243', 'chandra layout', '', 0, 0, NULL, 'profile_image_5.png', 'emp222', '00:00:00', '00:00:00', '0', '2024-07-19 19:12:20', 1, '2024-07-20 19:57:05', 4, '0', NULL, NULL),
-(6, 1, 1, 3, 'ramkumar gurav', 1, '1970-01-01', NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '2024-07-10', '2024-07-14', 'sdaf1243', 'asdf1243', 'chandra layout', '', 0, 0, NULL, NULL, 'emp114', '00:00:00', '00:00:00', '1', '2024-07-19 20:01:10', 1, NULL, NULL, '0', NULL, NULL),
-(7, 1, 2, 1, 'ramkumar gurav', 1, '2001-01-19', NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '2024-07-19', '2024-07-18', 'sdaf1243', 'asdf1243', 'chandra layout', '', 0, 0, NULL, NULL, 'emp116', '00:00:00', '00:00:00', '1', '2024-07-19 20:08:44', 1, '2024-07-19 20:11:20', 1, '0', NULL, NULL),
-(8, 1, 2, 3, 'shav gurav', 2, '2024-07-19', NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '2024-07-24', '2024-07-18', 'PAN1234', 'ADHAR1234', 'chandra layout', '', 0, 0, NULL, NULL, 'emp117', '00:00:00', '00:00:00', '1', '2024-07-20 11:08:22', 1, NULL, NULL, '0', NULL, NULL),
-(9, 2, 2, 1, 'msn gurav', 1, NULL, NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '1998-07-17', '2024-07-19', 'PAN1234', 'asdf1243', 'chandra layout', '', 0, 0, NULL, NULL, 'emp118', '00:00:00', '00:00:00', '1', '2024-07-20 11:33:14', 1, '2024-07-20 11:57:27', 1, '0', NULL, NULL);
+INSERT INTO `user_employee` (`user_employee_id`, `branch_id`, `department_id`, `designation_id`, `name`, `attendance_log`, `marital_status`, `marriage_anniversary`, `gender`, `contactno`, `alt_contactno`, `personal_email`, `company_email`, `birthday`, `joining_date`, `pan_number`, `aadhar_number`, `address`, `pincode`, `country_id`, `state_id`, `city_id`, `profile_image`, `user_employee_custom_id`, `status`, `added_on`, `added_by`, `updated_on`, `updated_by`, `is_deleted`, `is_deleted_on`, `is_deleted_by`) VALUES
+(4, 2, 2, 2, 'Guru Hugar', 'On 27-July-2024 at 07:24 PM Employee logged in', 2, '2024-07-19', NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '1998-07-17', '2024-07-14', 'sdaf1243', '818236182736', 'chandra layout,bengulur 56089', '', 0, 0, NULL, 'profile_image_4.png', 'emp111', '1', '2024-07-15 18:38:05', 1, '2024-07-27 19:24:58', 1, '0', NULL, NULL),
+(5, 1, 2, 1, 'ram gurav', 'On 27-July-2024 at 06:48 PM Admin updated the Employee attendance record', 1, NULL, NULL, '08549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '1997-07-25', '2024-07-18', 'sdaf1243', 'asdf1243', 'chandra layout', '', 0, 0, NULL, 'profile_image_5.png', 'emp222', '1', '2024-07-19 19:12:20', 1, '2024-07-27 18:48:02', 1, '0', NULL, NULL),
+(10, 4, 1, 1, 'Abhi yadav', NULL, 1, NULL, NULL, '8549065626', '', 'ramkumarsgurav@gmail.com', 'ramkumarsgurav@gmail.com', '1998-07-17', '2024-07-23', 'sdaf1243', 'asdf1243', 'chandra layout', '', 0, 0, NULL, 'profile_image_10.png', 'super333', '1', '2024-07-27 11:00:32', 1, '2024-07-27 11:57:22', 1, '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2316,19 +2315,19 @@ ALTER TABLE `admin_user_file`
 -- AUTO_INCREMENT for table `admin_user_role`
 --
 ALTER TABLE `admin_user_role`
-  MODIFY `admin_user_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `admin_user_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `city`
@@ -2388,7 +2387,7 @@ ALTER TABLE `fiscal_year`
 -- AUTO_INCREMENT for table `ip_address`
 --
 ALTER TABLE `ip_address`
-  MODIFY `ip_address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ip_address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `module_master`
@@ -2406,7 +2405,7 @@ ALTER TABLE `module_permissions`
 -- AUTO_INCREMENT for table `shift_timing`
 --
 ALTER TABLE `shift_timing`
-  MODIFY `shift_timing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
+  MODIFY `shift_timing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=408;
 
 --
 -- AUTO_INCREMENT for table `state`
@@ -2430,7 +2429,7 @@ ALTER TABLE `users_role_master`
 -- AUTO_INCREMENT for table `user_employee`
 --
 ALTER TABLE `user_employee`
-  MODIFY `user_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user_employee_kyc_file`

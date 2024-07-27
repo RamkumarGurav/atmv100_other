@@ -59,8 +59,6 @@ if (!empty($user_employee_data)) {
 	$company_email = $user_employee_data->company_email;
 	$pan_number = $user_employee_data->pan_number;
 	$aadhar_number = $user_employee_data->aadhar_number;
-	$start_time = $user_employee_data->start_time;
-	$end_time = $user_employee_data->end_time;
 	$birthday = date('d-m-Y', strtotime($user_employee_data->birthday));
 	$joining_date = date('d-m-Y', strtotime($user_employee_data->joining_date));
 	$profile_image = $user_employee_data->profile_image;
@@ -152,7 +150,7 @@ if (!empty($user_employee_data)) {
 
 								<div class="form-group row">
 
-									<div class="col-md-3 col-sm-6">
+								 	<div class="col-md-3 col-sm-6">
 										<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Branch <span
 												style="color:#f00;font-size: 22px;margin-top: 3px;">*</span></label>
 										<div class="col-sm-12">
@@ -224,7 +222,6 @@ if (!empty($user_employee_data)) {
 											</select>
 										</div>
 									</div>
-
 
 									<div class="col-md-3 col-sm-6">
 										<label for="inputEmail3" class="col-sm-12 label_content px-2 py-0">Employee ID<span

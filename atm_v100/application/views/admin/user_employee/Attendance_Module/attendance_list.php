@@ -3,6 +3,21 @@
 $page_module_name = "Attendance";
 
 ?>
+<style>
+    .dropdown-search {
+        position: relative;
+    }
+
+    .dropdown-search input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
 <!-- /.navbar -->
 
 <!-- Main Sidebar Container -->
@@ -50,30 +65,171 @@ $page_module_name = "Attendance";
                                 <?php echo form_open(MAINSITE_Admin . "$user_access->class_name/$user_access->function_name", array('method' => 'post', 'id' => 'search_report_form', "name" => "search_report_form", 'style' => '', 'class' => 'form-horizontal', 'role' => 'form', 'enctype' => 'multipart/form-data')); ?>
 
                                 <div class="card-body">
-
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <label>Login Time</label>
-                                                <input type="time" class="form-control " id="login_time"
-                                                    name="login_time" placeholder="Login Time">
-                                            </div>
+                                                <label>Field</label>
+                                                <select name="field_name" id="field_name" class="form-control"
+                                                    style="width: 100%;">
+                                                    <option value='uemp.name' <? if ($field_name == 'uemp.name') {
+                                                        echo 'selected';
+                                                    } ?>>
+                                                        Employee Name</option>
+                                                    <option value='uemp.user_employee_custom_id' <? if ($field_name == 'uemp.user_employee_custom_id') {
+                                                        echo 'selected';
+                                                    } ?>>
+                                                        Employee ID</option>
 
+                                                </select>
+
+                                            </div>
                                         </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Field Value</label>
+                                                <input type="text" name="field_value" id="field_value"
+                                                    placeholder="Field Value" style="width: 100%;" class="form-control"
+                                                    value="<?= $field_value ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Branch Name</label>
+                                                <select type="text" class="form-control" id="branch_id" name="branch_id"
+                                                    style="width: 100%;">
+                                                    <option value="">Select Branch</option>
+                                                    <? foreach ($branch_data as $item) {
+                                                        $selected = "";
+                                                        if ($item->branch_id == $branch_id) {
+                                                            $selected = "selected";
+                                                        }
+                                                        ?>
+                                                        <option value="<?= $item->branch_id ?>" <?= $selected ?>>
+                                                            <?= $item->branch_name ?>
+                                                            <? if ($item->status != 1) {
+                                                                echo " [Block]";
+                                                            } ?>
+                                                        </option>
+                                                    <? } ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
                                         <!-- /.col -->
-                                        <div class="col-md-6">
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <label>Logout Time</label>
-                                                <input type="time" class=" form-control" id="logout_time"
-                                                    name="logout_time" placeholder="Logout Time">
+                                                <label>Department Name</label>
+                                                <select type="text" class="form-control" id="department_id"
+                                                    name="department_id" style="width: 100%;">
+                                                    <option value="">Select Department</option>
+                                                    <? foreach ($department_data as $item) {
+                                                        $selected = "";
+                                                        if ($item->department_id == $department_id) {
+                                                            $selected = "selected";
+                                                        }
+                                                        ?>
+                                                        <option value="<?= $item->department_id ?>" <?= $selected ?>>
+                                                            <?= $item->department_name ?>
+                                                            <? if ($item->status != 1) {
+                                                                echo " [Block]";
+                                                            } ?>
+                                                        </option>
+                                                    <? } ?>
+                                                </select>
 
                                             </div>
+
                                         </div>
+                                        <!-- <div class="col-md-6 col-sm-6">
+                                            <div class="form-group">
+                                                <label for="user_employee_search">Employee ID</label>
+                                                <div class="dropdown-search">
+                                                    <input type="text" class="form-control" id="user_employee_search"
+                                                        placeholder="Search Employee ID">
+                                                    <div class="dropdown-menu" id="user_employee_dropdown"
+                                                        aria-labelledby="user_employee_search">
+
+                                                        <?php foreach ($user_employee_data_for_dropdown as $item) { ?>
+                                                            <a class="dropdown-item" href="#"
+                                                                data-value="<?= $item->user_employee_custom_id ?>">
+                                                                <?= $item->user_employee_custom_id ?>     <?php if ($item->status != 1)
+                                                                           echo " [Block]"; ?>
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <input type="hidden" id="user_employee_custom_id"
+                                                        name="user_employee_custom_id">
+                                                </div>
+                                            </div>
+                                        </div> -->
                                     </div>
 
-
                                     <div class="row">
-                                        <div class="col-md-6">
+
+
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Designation Name</label>
+                                                <select type="text" class="form-control" id="designation_id"
+                                                    name="designation_id" style="width: 100%;">
+                                                    <option value="">Select Designation</option>
+                                                    <? foreach ($designation_data as $item) {
+                                                        $selected = "";
+                                                        if ($item->designation_id == $designation_id) {
+                                                            $selected = "selected";
+                                                        }
+                                                        ?>
+                                                        <option value="<?= $item->designation_id ?>" <?= $selected ?>>
+                                                            <?= $item->designation_name ?>
+                                                            <? if ($item->status != 1) {
+                                                                echo " [Block]";
+                                                            } ?>
+                                                        </option>
+                                                    <? } ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Login Date</label>
+                                                <div class="input-group date reservationdate" id="reservationdate"
+                                                    data-target-input="nearest">
+                                                    <input type="text" value="<?= $login_date ?>" name="login_date"
+                                                        id="login_date" placeholder="Login Date" style="width: 100%;"
+                                                        class="form-control datetimepicker-input"
+                                                        data-target="#reservationdate" />
+                                                    <div class="input-group-append" data-target="#reservationdate"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Logout Date</label>
+
+                                                <div class="input-group date reservationdate" id="reservationdate"
+                                                    data-target-input="nearest">
+                                                    <input type="text" value="<?= $logout_date ?>" name="logout_date"
+                                                        id="logout_date" placeholder="Logout Date" style="width: 100%;"
+                                                        class="form-control datetimepicker-input"
+                                                        data-target="#reservationdate" />
+                                                    <div class="input-group-append" data-target="#reservationdate"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <label>Start Date</label>
                                                 <div class="input-group date reservationdate" id="reservationdate"
@@ -92,7 +248,7 @@ $page_module_name = "Attendance";
                                             </div>
                                         </div>
                                         <!-- /.col -->
-                                        <div class="col-md-6">
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="form-group">
                                                 <label>End Date</label>
                                                 <div class="input-group date reservationdate1" id="reservationdate1"
@@ -110,12 +266,10 @@ $page_module_name = "Attendance";
 
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3 col-sm-6">
                                             <div class="form-group">
-                                                <label>Status</label>
+                                                <label>Attendance Status</label>
                                                 <select name="record_status" id="record_status" class="form-control"
                                                     style="width: 100%;">
                                                     <option value=''>Active / Block</option>
@@ -130,13 +284,39 @@ $page_module_name = "Attendance";
 
                                             </div>
                                         </div>
-                                        <!-- /.col -->
-                                        <div class="col-md-6">
-                                            <!-- <div class="form-group">
-                                <label>Field Value</label>
-                                <input type="text" name="field_value" id="field_value" placeholder="Field Value" style="width: 100%;" class="form-control" value="<?= $field_value ?>"  >
-                                </div> -->
+
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Emlpoyee Status</label>
+                                                <select name="employee_record_status" id="employee_record_status"
+                                                    class="form-control" style="width: 100%;">
+                                                    <option value=''>Active / Block</option>
+                                                    <option value='1' <? if ($employee_record_status == 1) {
+                                                        echo 'selected';
+                                                    } ?>>
+                                                        Active</option>
+                                                    <option value='zero' <? if ($employee_record_status == 'zero') {
+                                                        echo 'selected';
+                                                    } ?>>Block</option>
+                                                </select>
+
+                                            </div>
                                         </div>
+
+                                    </div>
+
+
+                                    <div class="row">
+
+                                    </div>
+
+
+                                    <div class="row">
+
+
+
+                                        <!-- /.col -->
+
                                     </div>
 
 
@@ -145,6 +325,8 @@ $page_module_name = "Attendance";
                                     <center>
                                         <button type="submit" class="btn btn-info" id="search_report_btn"
                                             name="search_report_btn" value="1">Search</button>
+                                        <button type="submit" class="btn btn-warning" id="search_report_download_btn"
+                                            name="search_report_download_btn" value="1">Generate Report</button>
                                         &nbsp;&nbsp;<button type="reset" class="btn btn-default">Reset</button>
                                     </center>
                                 </div>
@@ -154,6 +336,7 @@ $page_module_name = "Attendance";
                     </div>
 
                 </div>
+
 
                 <div class="card">
 
@@ -182,6 +365,11 @@ $page_module_name = "Attendance";
                                 <button type="button" class="btn btn-success btn-sm export_excel"><i
                                         class="fas fa-file-excel"></i> Export</button>
                             <? } ?>
+                            <a class="btn btn-warning btn-sm p-1 text-dark"
+                                href="<?= MAINSITE_Admin . "user_employee/Attendance-Module/attendance-report-list" ?>"><i
+                                    class="fas fa-file-excel"></i>
+                                go to Attendance Report</a>
+
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -201,13 +389,12 @@ $page_module_name = "Attendance";
                                             <th width="4%"><input type="checkbox" name="main_check" id="main_check"
                                                     onclick="check_uncheck_All_records()" value="" /></th>
                                         <? } ?>
-                                        <th>View Details</th>
+                                        <th>View </th>
                                         <th>Employee ID</th>
                                         <th>Employee Name</th>
                                         <th>Logged-in Time</th>
                                         <th>Logged-out Time</th>
-                                        <th>Added On</th>
-                                        <th>Added By</th>
+                                        <!-- <th>Added On</th> -->
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -232,45 +419,39 @@ $page_module_name = "Attendance";
                                                 </td>
                                                 <td>
                                                     <?php if (!empty($item->user_employee_custom_id)): ?>
-                                                        <?= $item->user_employee_custom_id; ?>
+                                                        <a class="text-bold text-primary "
+                                                            href="<?= MAINSITE_Admin . "user_employee/User-Employee-Module/view/" . $item->user_employee_id ?>"><?= $item->user_employee_custom_id ?></a>
                                                     <?php else: ?>
                                                         -
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if (!empty($item->name)): ?>
-                                                        <u><a class="text-bold text-dark "
-                                                                href="<?= MAINSITE_Admin . "user_employee/User-Employee-Module/view/" . $item->user_employee_id ?>"><?= $item->name ?></a></u>
+                                                        <?= $item->name; ?>
                                                     <?php else: ?>
                                                         -
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if (!empty($item->login_time)): ?>
-                                                        <?= (new DateTime($item->login_time))->format('h:i A'); ?>
+                                                        <?= (new DateTime($item->login_time))->format("\A\\t h:i A \O\\n d-F-Y"); ?>
                                                     <?php else: ?>
                                                         -
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if (!empty($item->logout_time)): ?>
-                                                        <?= (new DateTime($item->logout_time))->format('h:i A'); ?>
+                                                        <?= (new DateTime($item->logout_time))->format("\A\\t h:i A \O\\n d-F-Y"); ?>
                                                     <?php else: ?>
                                                         -
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?php if (!empty($item->added_on)): ?>
+                                                <!-- <td><?php if (!empty($item->added_on)): ?>
                                                         <?= date("d-m-Y", strtotime($item->added_on)) ?>
                                                     <?php else: ?>
                                                         -
                                                     <?php endif; ?>
-                                                </td>
-                                                <td><?php if (!empty($item->added_by_name)): ?>
-                                                        <?= $item->added_by_name ?>
-                                                    <?php else: ?>
-                                                        -
-                                                    <?php endif; ?>
-                                                </td>
+                                                </td> -->
 
                                                 <td>
                                                     <?php if ($item->status == 1) { ?> <i class="fas fa-check btn-success btn-sm 
